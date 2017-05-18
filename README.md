@@ -1,4 +1,4 @@
-# Mô hình hóa thuật toán Tháp Hà Nội (Hanoi Towers) bằng D3JS
+# Mô hình hóa thuật toán Tháp Hà Nội (Hanoi Towers) bằng D3JS - Hướng đối tượng
 
 ## Phân tích bài toán:
 

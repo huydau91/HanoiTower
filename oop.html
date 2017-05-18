@@ -236,7 +236,7 @@
 
 		function callmove(){
 			n = $('input').val();
-			let move = new GameEngine();
+			let move = new GameEngine(n);
 			move.move(n, 0, margin, 2*margin);
 		}
 	</script>
