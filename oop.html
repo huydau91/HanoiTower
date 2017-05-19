@@ -24,7 +24,7 @@
 		let disks_input = total_disks = '';
 		let arr_disk = [];
 		let tower_height = ''; disks_in_tower1=disks_in_tower2=disks_in_tower3= '';
-		let i = 1;
+		let i = 1; steps = 0;
 
 		class Disk {
 			constructor(disks_input){
@@ -209,7 +209,8 @@
 					}
 
 					console.log("Move disk " + n + " from " + tower1 + " to " + tower3);
-
+					steps++;
+					console.log("Steps: " + steps);
 					this.move(n-1, tower2, tower1, tower3);
 				}
 			}
@@ -217,6 +218,7 @@
 
 		function callbuild(){
 			d3.selectAll("svg").remove();
+			steps = 0;
 			disks_input = $('input').val();
 
 			try {
