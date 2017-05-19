@@ -24,7 +24,7 @@
 		let disks_input = total_disks = '';
 		let arr_disk = [];
 		let tower_height = ''; disks_in_tower1=disks_in_tower2=disks_in_tower3= '';
-		let i = 1; steps = 0;
+		let i = 1; steps = click = 0;
 
 		class Disk {
 			constructor(disks_input){
@@ -218,7 +218,7 @@
 
 		function callbuild(){
 			d3.selectAll("svg").remove();
-			steps = 0;
+			steps = click = 0;
 			disks_input = $('input').val();
 
 			try {
@@ -242,6 +242,10 @@
 		}
 
 		function callmove(){
+			if (click >0){
+				return;
+			}
+			click++;
 			disks_input = Number($('input').val());
 			let gameEngine = new GameEngine(disks_input);
 			let tower1 = 0; tower2 = margin; tower3 = 2*margin
