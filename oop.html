@@ -21,22 +21,22 @@
 		let biggest_disk = $(".container").width()/4;
 		let margin = biggest_disk + biggest_disk/2;
 		let unit_disk = '';
-		let disk = [];
-		let tower_height = ''; tower1=tower2=tower3= '';
-		let disks = ''; n = '';
+		let disks_input = total_disks = '';
+		let arr_disk = [];
+		let tower_height = ''; disks_in_tower1=disks_in_tower2=disks_in_tower3= '';
 		let i = 1;
 
 		class Disk {
-			constructor(n){
-				this.n = n;
+			constructor(disks_input){
+				this.disks_input = disks_input;
 			}
 
 			build_disk(){
-				unit_disk = biggest_disk/n;
-				for (var i = 1; i<=n; i++){
+				unit_disk = biggest_disk/disks_input;
+				for (var i = 1; i<=disks_input; i++){
 					svg.append("rect")
 					.attr("x", function(){
-						return (n-i)*(unit_disk/2);
+						return (disks_input-i)*(unit_disk/2);
 					})
 					.attr("y", function(){
 						return i*40+100;
@@ -51,7 +51,7 @@
 					.attr("stroke", "rgba(0,0,0,.5)")
 					.classed("disk" + i + " color", true);
 
-					disk.push(d3.select(".disk" + i));
+					arr_disk.push(d3.select(".disk" + i));
 				}
 
 				d3.selectAll(".color").style("fill", function() {
@@ -71,7 +71,7 @@
 					.attr("rx", 10)
 					.attr("ry", 10)
 					.attr("width", 10)
-					.attr("height", n*40)
+					.attr("height", disks_input*40)
 					.attr("fill", "rgba(105, 105, 105, 0.8)");
 				}
 				for (var j=0; j<3; j++){
@@ -79,7 +79,7 @@
 					.attr("x", function(){
 						return j*margin;
 					})
-					.attr("y", n*40+140)
+					.attr("y", disks_input*40+140)
 					.attr("rx", 10)
 					.attr("ry", 10)
 					.attr("width", biggest_disk)
@@ -90,12 +90,12 @@
 		}
 
 		class GameEngine {
-			move(n, a, b, c){
+			move(n, tower1, tower2, tower3){
 				if (n > 0) {
-					this.move(n-1, a, c, b);
+					this.move(n-1, tower1, tower3, tower2);
 
-					if (a == 0 && c == margin){
-						disk[n-1]
+					if (tower1 == 0 && tower3 == margin){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -103,18 +103,18 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower2*40+100);
+						.attr("y", tower_height - disks_in_tower2*40+100);
 
-						tower1--; tower2++;
-						console.log("tower1 " + tower1 + ", tower2 " + tower2);
+						disks_in_tower1--; disks_in_tower2++;
+						console.log("disks_in_tower1 " + disks_in_tower1 + ", disks_in_tower2 " + disks_in_tower2);
 						i++;
 					}
 
-					if (a == 0 && c == 2*margin){
-						disk[n-1]
+					if (tower1 == 0 && tower3 == 2*margin){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -122,18 +122,18 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower3*40+100);
+						.attr("y", tower_height - disks_in_tower3*40+100);
 
-						tower1--; tower3++;
-						console.log("tower1 " + tower1 + ", tower3 " + tower3);
+						disks_in_tower1--; disks_in_tower3++;
+						console.log("disks_in_tower1 " + disks_in_tower1 + ", disks_in_tower3 " + disks_in_tower3);
 						i++;
 					}
 
-					if (a == margin && c == 0){
-						disk[n-1]
+					if (tower1 == margin && tower3 == 0){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -141,18 +141,18 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower1*40+100);
+						.attr("y", tower_height - disks_in_tower1*40+100);
 
-						tower2--; tower1++;
-						console.log("tower1 " + tower1 + ", tower2 " + tower2);
+						disks_in_tower2--; disks_in_tower1++;
+						console.log("disks_in_tower1 " + disks_in_tower1 + ", disks_in_tower2 " + disks_in_tower2);
 						i++;
 					}
 
-					if (a == margin && c == 2*margin){
-						disk[n-1]
+					if (tower1 == margin && tower3 == 2*margin){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -160,18 +160,18 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower3*40+100);
+						.attr("y", tower_height - disks_in_tower3*40+100);
 
-						tower2--; tower3++;
-						console.log("tower2 " + tower2 + ", tower3 " + tower3);
+						disks_in_tower2--; disks_in_tower3++;
+						console.log("disks_in_tower2 " + disks_in_tower2 + ", disks_in_tower3 " + disks_in_tower3);
 						i++;
 					}
 
-					if (a == 2*margin && c == margin){
-						disk[n-1]
+					if (tower1 == 2*margin && tower3 == margin){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -179,18 +179,18 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower2*40+100);
+						.attr("y", tower_height - disks_in_tower2*40+100);
 
-						tower2++; tower3--;
-						console.log("tower2 " + tower2 + ", tower3 " + tower3);
+						disks_in_tower2++; disks_in_tower3--;
+						console.log("disks_in_tower2 " + disks_in_tower2 + ", disks_in_tower3 " + disks_in_tower3);
 						i++;
 					}
 
-					if (a == 2*margin && c == 0){
-						disk[n-1]
+					if (tower1 == 2*margin && tower3 == 0){
+						arr_disk[n-1]
 						.transition()
 						.delay(i*2000)
 						.transition()
@@ -198,41 +198,54 @@
 						.attr("y", 0)
 						.transition()
 						.duration(750)
-						.attr("x", c+(disks-n)*(unit_disk/2))
+						.attr("x", tower3+(total_disks-n)*(unit_disk/2))
 						.transition()
 						.duration(750)
-						.attr("y", tower_height - tower1*40+100);
+						.attr("y", tower_height - disks_in_tower1*40+100);
 
-						tower1++; tower3--;
-						console.log("tower1 " + tower1 + ", tower3 " + tower3);
+						disks_in_tower1++; disks_in_tower3--;
+						console.log("disks_in_tower1 " + disks_in_tower1 + ", disks_in_tower3 " + disks_in_tower3);
 						i++;
 					}
 
-					console.log("Move disk " + n + " from " + a + " to " + c);
+					console.log("Move disk " + n + " from " + tower1 + " to " + tower3);
 
-					this.move(n-1, b, a, c);
+					this.move(n-1, tower2, tower1, tower3);
 				}
 			}
 		}
 
 		function callbuild(){
 			d3.selectAll("svg").remove();
-			n = $('input').val();
-			disk = []; tower2=tower3 = ''; i = 1;
-			svg = d3.select(".container").append("svg").attr("width", $(".container").width()).attr("height", n*40+200);
-			tower_height = n*40;
-			tower1 = disks = n;
-			let build_disk = new Disk(n);
+			disks_input = Number($('input').val());
+
+			try {
+				if (isNaN(disks_input) || disks_input <= 0){
+					throw "Xin mời nhập 1 số!";
+				}
+			}
+			catch (e){
+				alert("Xin mời nhập 1 số!");
+				return;
+			}
+
+			arr_disk = []; disks_in_tower2=disks_in_tower3 = ''; i = 1;
+			svg = d3.select(".container").append("svg").attr("width", $(".container").width()).attr("height", disks_input*40+200);
+			tower_height = disks_input*40;
+			disks_in_tower1 = total_disks = disks_input;
+			let build_disk = new Disk(disks_input);
 			let build_tower = new Tower();
 			build_tower.build_tower();
 			build_disk.build_disk();
 		}
 
 		function callmove(){
-			n = $('input').val();
-			let move = new GameEngine(n);
-			move.move(n, 0, margin, 2*margin);
+			disks_input = $('input').val();
+			let gameEngine = new GameEngine(disks_input);
+			let tower1 = 0; tower2 = margin; tower3 = 2*margin
+			gameEngine.move(disks_input, tower1, tower2, tower3);
 		}
+
 	</script>
 </body>
 </html>
