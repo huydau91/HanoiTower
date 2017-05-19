@@ -217,15 +217,15 @@
 
 		function callbuild(){
 			d3.selectAll("svg").remove();
-			disks_input = Number($('input').val());
+			disks_input = $('input').val();
 
 			try {
-				if (isNaN(disks_input) || disks_input <= 0){
-					throw "Xin mời nhập 1 số!";
+				if (isNaN(disks_input) || disks_input <= 0 || disks_input === ''){
+					throw "Please insert a number!";
 				}
 			}
 			catch (e){
-				alert("Xin mời nhập 1 số!");
+				alert("Please insert a number!");
 				return;
 			}
 
@@ -240,7 +240,7 @@
 		}
 
 		function callmove(){
-			disks_input = $('input').val();
+			disks_input = Number($('input').val());
 			let gameEngine = new GameEngine(disks_input);
 			let tower1 = 0; tower2 = margin; tower3 = 2*margin
 			gameEngine.move(disks_input, tower1, tower2, tower3);
